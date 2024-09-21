@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deposit</title>
+    <style>
+        body {
+            font-family: "Times New Roman", serif;
+            background-color: #ffffff;
+            color: black;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+        }
+               
+        .header {
+            margin-left: 150px;
+            margin-top: 25px;
+            margin-bottom: 20px;
+        }
+        .header a {
+            color: #1e88e5;
+            font-size: 25px;
+            margin-right: 162PX;
+            text-decoration: none;
+        }
+        .header a:hover {
+            text-decoration: underline;
+        }
+        .container {
+            background-color: #f0f0f0;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid black;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            width: 500px;
+            height: 620px;
+            text-align: center;
+        }
+        h1 {
+            margin-top: 0px;
+            margin-bottom: 30px;
+            font-size: 40px;
+        }
+        a1 {
+            margin-left: -200px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            font-size: 25px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        select {
+            width: 48%;
+            font-size: 22px;
+            padding: 10px;
+            border: 1px solid #cccccc;
+            border-radius: 5px;
+            margin-bottom: 12px;
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            font-size: 25px;
+            text-align: left;
+            width: 100%;
+        }
+        input[type="number"] {
+            width: calc(100% - 22px);
+            padding: 10px;
+            border: 1px solid #cccccc;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            font-size: 22px;
+        }
+        .expiry-container {
+            display: flex;
+            justify-content: space-between;
+            width: calc(100% - 22px);
+        }
+        .expiry-container input[type="number"] {
+            width: 48%;
+        }
+        button {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 5px;
+            background-color: #00e676;
+            color: #ffffff;
+            font-size: px;
+            cursor: pointer;
+            font-family: "Times New Roman", serif;
+
+        }
+        button:hover {
+            background-color: #00c853;
+        }
+        .alert {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        .alert-success {
+            background-color: #388e3c;
+            color: #ffffff;
+        }
+        .alert-error {
+            background-color: #d32f2f;
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+            <a href="{{ url_for('transactions') }}"><< Back To Transactions</a>
+            <a href="{{ url_for('logout') }}">Log Out</a>
+    </div>
+
+    <div class="container">
+        <h1>Deposit</h1>
+        
+        <a1>Total available funds : &#8377; {{user.total_balance_amount}}</a1>
+        <form method="POST">
+            <label for="amount">Enter the Amount</label>
+            <input type="number" id="amount" name="amount" min="1" required>
+            <label for="card_number">Enter the Card Number</label>
+            <input type="number" id="card_number" name="card_number" pattern="[0-9]" required>
+            <label for="expiry_date">Enter the Expiry Month/Year</label>
+            <div class="expiry-container">
+                <select id="expiry_month" name="expiry_month" required>
+                    <option value="01">Jan</option>
+                            <option value="02">Feb</option>
+                            <option value="03">Mar</option>
+                            <option value="04">Apr</option>
+                            <option value="05">May</option>
+                            <option value="06">Jun</option>
+                            <option value="07">Jul</option>
+                            <option value="08">Aug</option>
+                            <option value="09">Sep</option>
+                            <option value="10">Oct</option>
+                            <option value="11">Nov</option>
+                            <option value="12">Dec</option>
+        
+                        </select><br>
+                <input type="number" id="expiry_year" name="expiry_year" placeholder="Year" min="2024" max="2099" required>
+            </div>
+            <label for="cvv">Enter the CVV</label>
+            <input type="number" id="cvv" name="cvv" pattern="[0-9]{3}" required>
+            <button type="submit">Deposit</button>
+        </form>
+        
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+</body>
+</html>
+

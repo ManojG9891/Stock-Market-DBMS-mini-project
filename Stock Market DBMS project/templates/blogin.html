@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Broker Login</title>
+    <style>
+        body {
+            font-family: "Times New Roman", serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: url('static/bpage.jpg') no-repeat center center;
+            background-size: cover;
+            position: relative;
+            overflow: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: 1;
+        }
+
+        .header {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            padding: 20px;
+            text-align: left;
+        }
+
+        .header img {
+            height: 100px;
+            opacity: 100%;
+            float: left;
+            margin-top: -10px;
+            margin-left: 33px;
+        }
+
+        .loginbox {
+            position: relative;
+            z-index: 2;
+            width: 500px;
+            height: 440px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(30px);
+            margin-left: 800px;
+        }
+
+        .loginbox h2 {
+            margin-bottom: 20px;
+            color: rgb(0, 0, 0);
+            text-align: center;
+            font-size: 35px;
+            margin-bottom: 60px;
+            font-weight: bolder;
+        }
+
+
+        .input-box {
+            position: relative;
+            width: 100%;
+            height: 60px;
+            margin-bottom: 30px;
+            border-bottom: 2px solid rgb(210, 203, 203);
+        }
+
+        .input {
+            position: relative;
+            width: 100%;
+            height: 50px;
+            margin-bottom: 20px;
+            margin-top: 70px;
+        }
+
+        .input-box label {
+            position: absolute;
+            top: 50%;
+            left: 5px;
+            transform: translateY(-50%);
+            font-size: 25px;
+            color: #ffffff;
+            font-weight: 500;
+            pointer-events: none;
+            transition: 0.3s ease-in-out;
+        }
+
+        .input-box input {
+            width: 90%;
+            height: 100%;
+            background: transparent;
+            border: none;
+            outline: none;
+            font-size: 25px;
+            color: rgb(255, 255, 255);
+            font-family: "Times New Roman", serif;
+            transition: all 0.3s ease;
+            margin-left: 10px;
+        }
+
+        .input-box input:focus~label,
+        .input-box input:not(:placeholder-shown)~label {
+            top: -5px;
+            font-size: 22px;
+            color: rgb(245, 245, 245);
+        }
+
+        .icon {
+            position: absolute;
+            right: 8px;
+            font-size: 1.5em;
+            color: rgb(255, 255, 255);
+            line-height: 60px;
+        }
+
+        .input input[type="submit"] {
+            width: 100%;
+            height: 50px;
+            background: rgb(255, 123, 0);
+            border: none;
+            border-radius: 25px;
+            color: white;
+            font-size: 25px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            font-family: "Times New Roman", serif;
+            margin-top: 5px;
+        }
+
+        .input input[type="submit"]:hover {
+            background: rgb(150, 255, 52);
+        }
+
+        .alert {
+            font-size: 22px;
+            padding: 10px;
+            text-align: center;
+            margin-bottom: 15px;
+            border: 1px solid transparent;
+            border-radius: 4px;
+            width: 60%;
+            margin-left: auto;
+            margin-right: auto;
+            position: absolute;
+            top: 330px;
+            left: 30px;
+            right: 30px;
+
+        }
+
+        .alert-success {
+            color: #3c763d;
+            background-color: #dff0d8;
+        }
+
+        .alert-danger {
+            color: #a94442;
+            background-color: #f2dede;            
+        }
+        
+        a{
+            margin-top: 25px;
+            margin-left: 140px;
+            font-size: 22px;
+            text-decoration: none;
+            margin-bottom: -10px;
+            color: white;
+        }
+        a:hover{
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <img src="static/logo.png" alt="Logo">
+    </div>
+    
+    <div class="loginbox">
+        <div class="welcome">
+            <h2>Broker Login</h2>
+        </div>
+        <form action="{{ url_for('brokerlogin') }}" method="POST">
+            <div class="input-box">
+                <span class="icon"><ion-icon name="mail"></ion-icon></span>
+                <input type="email" id="b_email" name="b_email" placeholder=" " required>
+                <label for="b_email">Email</label>
+            </div>
+            <div class="input-box">
+                <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
+                <input type="password" id="b_password" name="b_password" placeholder=" " required>
+                <label for="b_password">Password</label>
+            </div>
+            <div class="input">
+                <input type="submit" value="Login">
+            </div>
+        </form>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% set category, message = messages[0] %}
+        <div class="alert alert-{{ category }}">{{ message }}</div>
+        {% endif %}
+        {% endwith %}
+
+        <a href="{{ url_for('back') }}">Click Here To Go Back</a>
+
+    </div>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <link href='https://unpkg.com/css.gg@2.0.0/icons/css/work-alt.css' rel='stylesheet'>
+</body>
+
+</html>

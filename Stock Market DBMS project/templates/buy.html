@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buy {{ stock.stock_name }}</title>
+    <style>
+        body {
+            font-family: "Times New Roman", serif;
+            background-color: white;
+            color: black;
+            margin: 25px;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: 10px;
+        }
+        h2{
+            text-align: center;
+            font-size: 40px;
+            margin: 0px;
+            color: #0cda0c;
+        }
+        .header {
+            margin-left: 380px;
+            margin-top: -5px;
+        }
+        .header a {
+            color: #1e88e5;
+            font-size: 22px;
+            margin-right: 260px;
+            text-decoration: none;
+        }
+        .header a:hover {
+            text-decoration: underline;
+        }
+        table {
+            width: 90%;
+            max-width: 600px;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        td {
+            font-size: 25px;
+            padding: 15px;
+            border-bottom: 1px solid #333333;
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            font-size: 25px;
+        }
+        input[type="number"] {
+            width: calc(98% - 22px);
+            padding: 15px;
+            border: 1px solid #0f0e0e;
+            border-radius: 5px;
+            background-color: #f4f1f1;
+            color: #080808;
+            font-size: 22px;
+        }
+        button {
+            width: 100%;
+            padding: 15px;
+            margin: 100px 0;
+            border: none;
+            border-radius: 5px;
+            background-color: #0cda0c;
+            color: #000000;
+            font-size: 22px;
+            cursor: pointer;
+            margin-top: 110px;
+            margin-bottom: 0px;
+        }
+        button:hover {
+            background-color: #0ca049;
+        }
+        .container {
+            width: 90%;
+            max-width: 600px;
+            margin: 20px auto;
+        }
+        .back-link, .logout-link {
+            display: inline-block;
+            margin: 10px;
+        }
+        .alert {
+            padding: 15px;
+            margin-top:-110px;
+            text-align: center;
+            border-radius: 5px;
+            font-size: 20px;
+        }
+        .alert-success {
+            background-color: #388e3c;
+        }
+        .alert-error {
+            background-color: #d32f2f;
+        }
+
+        .h {
+            margin-top: -90px;
+            text-align: center;
+            font-size: 23px;
+            text-decoration: none;
+        }
+        .h a{
+            text-decoration: none;
+        }
+        .h a:hover{
+            text-decoration: underline;
+        }
+      
+    </style>
+</head>
+<body>
+    <div class="header">
+        <a href="{{ url_for('stock_details', stock_id=stock.stock_id) }}" class="back-link">&lt;&lt; Back To Stock Details</a>
+        <a href="{{ url_for('logout') }}" class="logout-link">Log Out</a>
+    </div>
+    
+    <div class="container">
+        
+        <h2>Buy {{ stock.stock_name }}</h2>
+        <table>
+            <tr>
+                <td>Stock ID</td>
+                <td>{{ stock.stock_id }}</td>
+            </tr>
+            <tr>
+                <td>Stock Name</td>
+                <td>{{ stock.stock_name }}</td>
+            </tr>
+            <tr>
+                <td>Stock Price</td>
+                <td>{{ stock.stock_price }}</td>
+            </tr>
+            <tr>
+                <td>Today's Gain</td>
+                <td>{{ '+' if stock.today_gain >= 0 }}{{ stock.today_gain }}</td>
+            </tr>
+            <tr>
+                <td>Total available Funds</td>
+                <td>{{ user.total_balance_amount }}</td>
+            </tr>
+        </table>
+        <form method="POST">
+            <label for="quantity">Enter the Number of Quantities</label>
+            <input type="number" id="quantity" name="quantity" min="1" required>
+            <button type="submit"><b>Click Here To BUY</b></button>
+        </form>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}"><b>{{ message }}</b></div>
+                    
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <div class="h">
+            <a href="{{ url_for('deposit') }}">Click Here To Add Funds</a>
+        </div>
+    </div>
+    
+</body>
+</html>

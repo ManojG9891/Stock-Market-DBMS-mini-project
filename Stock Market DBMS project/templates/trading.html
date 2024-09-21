@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trading History</title>
+    <style>
+        body {
+            font-family: "Times New Roman", serif;
+            margin: 0;
+            padding: 2px;
+            background-color: #f5f5f5;
+        }
+        .header {
+            position: sticky;
+            background-color: #fff;
+            padding: 5px 10px 25px;
+            top: 0;
+            box-shadow: 0 2px 5px #007bff;
+            display: flex;
+            flex-direction: column; 
+        }
+        .header img {
+            width: 350px;
+            height: 120px;
+            margin-right: 10px;
+            margin-bottom: -10px;
+        }
+        
+        .header p {
+            margin: 0px;
+            padding: 0px ;
+        }
+        .header p a {
+            padding: 10px 10px;
+            margin-left: 10px;
+            margin-right: 60px;
+            font-size: 25px;
+            text-decoration: none;
+            color: #007bff;
+        }
+        .header p a:hover {
+            text-decoration: underline;
+        }
+
+        .header1 {
+            position: sticky;
+            top: 170px;
+            padding: 10px 1;
+            z-index: 1000;
+        }
+        .header1 h2 {
+            text-align: center;
+            font-size: 30px;
+            padding: 10px;
+            color: #000000;
+            background-color: #f5f5f5;
+            margin: 20px 0 ;
+            margin-top: 10px;
+            margin-bottom: 5px;
+        }
+        .header3 {
+            position: sticky;
+            top: 225px;
+            padding: 10px 1;
+            z-index: 1000;
+        }
+        table {
+            width: 99%;
+            margin: 0 auto;
+            border-collapse: collapse;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            background: white;
+        }
+        td {
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+            font-size: 22px;
+        }
+        th {
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+        td {
+            font-size: 20px;
+        }
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        .no-history {
+            text-align: center;
+            font-size: 25px;
+            color: #151414;
+            margin-top: 25px;
+        }
+        .buy {
+            color: green;
+        }
+        .sell {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="static/name-logo.png" alt="Logo">
+        <p>
+            <a href="{{ url_for('stocks_index') }}">Home Page</a> 
+            <a href="{{ url_for('holdings') }}">Stock Holdings</a> 
+            <a href="{{ url_for('trading') }}"><u>Trading History</u></a> 
+            <a href="{{ url_for('transactions') }}">Transactions</a> 
+            <a href="{{ url_for('account') }}">Account Details</a> 
+            <a href="{{ url_for('logout') }}">Log Out</a>
+        </p>
+    </div>
+
+    <div class="header1">
+        <h2>Your Trading History</h2>
+    </div>
+
+    {% if tradings %}
+    <table>
+        <tr class="header3">
+            <th>Trading ID</th>
+            <th>Stock ID</th>
+            <th>Stock Name</th>
+            <th>Trading Type</th>
+            <th>Quantities</th>
+            <th>Buy Date</th>
+            <th>Buy Price</th>
+            <th>Sell Date</th>
+            <th>Sell Price</th>
+        </tr>
+        {% for trading in tradings %}
+        <tr>
+            <td>{{ trading.trading_id }}</td>
+            <td>{{ trading.stock_id }}</td>
+            <td>{{ trading.stock_name }}</td>
+            <td class="{{ 'buy' if trading.t_type == 'BUY' else 'sell' }}">{{ trading.t_type }}</td>
+            <td>{{ trading.quantities }}</td>
+            {% if trading.t_type == 'BUY' %}
+            <td>{{ trading.buy_date }}</td>
+            <td>&#8377; {{ trading.buy_price }}</td>
+            <td>-</td>
+            <td>-</td>
+            {% elif trading.t_type == 'SELL' %}
+            <td>-</td>
+            <td>-</td>
+            <td>{{ trading.sell_date }}</td>
+            <td>&#8377; {{ trading.sell_price }}</td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+    <p class="no-history">NO TRADING HISTORY</p>
+    {% endif %}
+</body>
+</html>

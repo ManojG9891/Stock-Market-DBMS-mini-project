@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Stock</title>
+    <style>
+        body {
+            font-family: "Times New Roman", serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+
+        .header {
+            position: sticky;
+            background-color: #fff;
+            padding: 5px 10px 25px;
+            top: 0;
+            box-shadow: 0 2px 5px #007bff;
+            display: flex;
+            flex-direction: column; 
+            z-index: 1000;
+
+        }
+        .header img {
+            width: 350px;
+            height: 120px;
+            margin-right: 10px;
+            margin-bottom: -10px;
+        }
+
+        .header h1 {
+            margin: 10px;
+            padding: 1px;
+            font-size: 40px;
+            color: #000000;
+        }
+
+        .header p {
+            margin: 0;
+            padding: 0px;
+        }
+
+        .header p a {
+            padding: 10px 10px;
+            margin-left: 75px;
+            margin-right: 60px;
+            font-size: 25px;
+            text-decoration: none;
+            color: #007bff;
+        }
+
+        .header p a:hover {
+            text-decoration: underline;
+        }
+
+        .header1 {
+            position: sticky;
+            top: 170.1px;
+            background-color: white;
+            padding: 10px 1;
+            z-index: 1000;
+            box-shadow: 0 5px 5px rgba(2, 228, 21, 0.912);
+        }
+
+        .header1 h2 {
+            text-align: center;
+            font-size: 30px;
+            color: #000000;
+            margin: 13px 0 10px 0;
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(118, 114, 114, 0.912);
+        }
+
+        .form-box {
+            margin: 0 auto;
+            width: 96%;
+            border: 2px solid rgba(255, 255, 255, .5);
+            border-radius: 20px;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 0 30px rgba(0, 0, 0, .5);
+            justify-content: left;
+            align-items: center;
+            padding: 20px;
+            height: 630px;
+        }
+
+        .input-box {
+            display: flex;
+            justify-content: space-between;
+            gap: 30px;
+            margin: 30px 0;
+            margin-bottom: 40px;
+        }
+
+        .input-wrapper {
+            position: relative;
+            width: 45%;
+            height: 50px;
+            margin-left: 10px;
+            margin-right: 30px;
+            border-bottom: 2px solid;
+            border-bottom-color: rgb(31, 17, 17);
+            transition: border-bottom-color 0.3s ease-in-out;
+        }
+
+        .input-wrapper label {
+            position: absolute;
+            top: 50%;
+            left: 5px;
+            transform: translateY(-50%);
+            font-size: 26px;
+            color: #2c1d1d;
+            font-weight: 500;
+            pointer-events: none;
+            transition: 0.3s ease-in-out;
+        }
+
+        .input-wrapper input:focus ~ label,
+        .input-wrapper input:not(:placeholder-shown) ~ label {
+            top: -5px;
+            font-size: 25px;
+            color: rgb(0, 0, 0);  
+        }
+
+        
+        .input-wrapper input {
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            border: none;
+            outline: none;
+            font-size: 26px;
+            margin-left: 10px;
+            margin-top: 8px;
+            color: rgb(0, 0, 0);
+            font-family: "Times New Roman", serif;
+            transition: all 0.3s ease;
+        }
+
+    
+        input[type="submit"] {
+            margin-top: 30px;
+            background-color: #2fb533;
+            font-size: 30px;
+            color: white;
+            padding: 10px 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 250px;
+            font-family: "Times New Roman", serif;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #007a04;
+        }
+
+        .alert {
+            margin-top: -540px;
+            font-size: 30px;
+            padding: 10px;
+            text-align: center;
+            margin-bottom: 15px;
+            border: 1px solid transparent;
+            border-radius: 4px;
+            width: 60%;
+            margin-left: 70px;
+            margin-right: auto;
+            z-index: 1000;
+
+        }
+
+        .alert-success {
+            color: #00ff04;
+        }
+
+        .alert-warning {
+            color: #a94442;
+        }
+
+        .gain {
+            color: green;
+        }
+
+        .loss {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="{{ url_for('static', filename='name-logo.png') }}" alt="Logo">
+        <div>
+            <p>
+                <a href="{{ url_for('edit_page') }}">Edit Stock</a> 
+                <a href="{{ url_for('add_stock') }}">Add Stock</a>
+                <a href="{{ url_for('Trades') }}">Stock Trades</a> 
+                <a href="{{ url_for('overview') }}">Customer Overview</a> 
+                <a href="{{ url_for('logout') }}">Log Out</a>
+            </p>
+        </div>
+    </div>
+
+    <div class="header1">
+        <h2>Edit Stock Details</h2>
+    </div>
+
+    <div class="form-box">
+        <form action="{{ url_for('edit_stock', stock_id=stock.stock_id) }}" method="POST">
+            <div class="input-box">
+                <div class="input-wrapper">
+                    <input type="number" id="stock_id" name="stock_id" value="{{ stock.stock_id }}" readonly>
+                    <label for="stock_id">Stock ID</label>
+                </div>
+                <div class="input-wrapper">
+                    <input type="text" id="stock_name" name="stock_name" value="{{ stock.stock_name }}" required>
+                    <label for="stock_name">Stock Name</label>
+                </div>
+            </div>
+
+            <div class="input-box">
+                <div class="input-wrapper">
+                    <input type="number" id="stock_price" name="stock_price" step="0.01" value="{{ stock.stock_price }}" required>
+                    <label for="stock_price">Current Stock Price</label>
+                </div>
+                <div class="input-wrapper">
+                    <input type="number" id="today_gain" name="today_gain" step="0.01" value="{{ stock.today_gain }}" required>
+                    <label for="today_gain">Today's Gain</label>
+                </div>
+            </div>
+
+            <div class="input-box">
+                <div class="input-wrapper">
+                    <input type="number" id="one_year_lowprice" name="one_year_lowprice" step="0.01" value="{{ stock.one_year_lowprice }}">
+                    <label for="one_year_lowprice">52 Week Low Price</label>
+                </div>
+                <div class="input-wrapper">
+                    <input type="number" id="one_year_highprice" name="one_year_highprice" step="0.01" value="{{ stock.one_year_highprice }}">
+                    <label for="one_year_highprice">52 Week High Price</label>
+                </div>
+            </div>
+
+            <div class="input-box">
+                <div class="input-wrapper">
+                    <input type="text" id="ceo_name" name="ceo_name" value="{{ stock.ceo_name }}" required>
+                    <label for="ceo_name">CEO Name</label>
+                </div>
+                <div class="input-wrapper">
+                    <input type="number" id="founded" name="founded" value="{{ stock.founded }}">
+                    <label for="founded">Company Founded Year</label>
+                </div>
+            </div>
+
+            <div class="input-box">
+                <div class="input-wrapper">
+                    <input type="text" id="industry" name="industry" value="{{ stock.industry }}" required>
+                    <label for="industry">Company's Industry</label>
+                </div>
+                <div class="input-wrapper">
+                    <input type="text" id="headquarters" name="headquarters" value="{{ stock.headquarters }}" required>
+                    <label for="headquarters">Headquarters Location</label>
+                </div>
+            </div>
+
+            <div class="input-box">
+                <div class="input-wrapper">
+                    <input type="number" id="market_cap" name="market_cap" value="{{ stock.market_cap }}" required>
+                    <label for="market_cap">Market Cap</label>
+                </div>
+                <div class="input-wrapper">
+                    <input type="number" id="current_year_profit" name="current_year_profit" value="{{ stock.current_year_profit }}" required>
+                    <label for="current_year_profit">Current Year Profit</label>
+                </div>
+            </div>
+
+            <input type="submit" value="Update Stock">
+
+        </form>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% set category, message = messages[0] %}
+        <div class="alert alert-{{ category }}">{{ message }}</div>
+        {% endif %}
+        {% endwith %}
+    </div>
+</body>
+</html>

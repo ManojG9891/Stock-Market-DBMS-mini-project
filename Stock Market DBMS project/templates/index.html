@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Market</title>
+    <style>
+        @keyframes slideDown {
+            0% {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideUp {
+            0% {
+                transform: translateY(100%);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        body {
+            font-family: 'Arial', 'Sans-serif';
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url("{{ url_for('static', filename='index.png') }}");
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            opacity: 1;
+            z-index: -1;
+        }
+
+        .header {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            padding: 20px;
+            text-align: left;
+            animation: slideDown 2s ease forwards;
+        }
+
+        .header img {
+            height: 185px;
+            opacity: 90%;
+            float: left;
+            margin-top: -23px;
+            margin-left: 35px;
+        }
+
+        h2 {
+            color: #f4f6f8;
+            font-size: 75px;
+            margin-bottom: 20px;
+            position: absolute;
+            text-align: center;
+            top: -28px;
+            left: -750px;
+            right: 30px;
+        }
+
+        h1,
+        h3,
+        h4 {
+            animation: slideUp 4s ease forwards;
+        }
+
+        h1 {
+            color: #f4f6f8;
+            font-size: 87px;
+            margin-bottom: 20px;
+            position: absolute;
+            top: 140px;
+            left: 41px;
+            right: 30px;
+        }
+
+        h3 {
+            color: #f4f6f8;
+            font-size: 87px;
+            margin-bottom: 20px;
+            position: absolute;
+            top: 204px;
+            left: 54px;
+            right: 30px;
+        }
+
+        h4 {
+            color: #f4f6f8;
+            font-size: 32px;
+            margin-bottom: 20px;
+            position: absolute;
+            top: 355px;
+            left: 57px;
+            right: 30px;
+        }
+
+        .index {
+            position: relative;
+            padding: 20px;
+            width: fit-content;
+            top: 255px;
+            left: -516px;
+            animation: slideUp 2s ease forwards;
+        }
+
+        .index a {
+            color: #f4f6f8;
+            font-size: 23px;
+            display: inline-block;
+            text-decoration: none;
+            padding: 15px;
+            border: 1.5px solid #414141;
+            border-radius: 25px;
+            transition: background-color 0.3s ease;
+        }
+
+        .index a:hover {
+            background-color: #414141;
+        }
+
+        .index a:active {
+            background-color: #414141;
+        }
+
+        .links {
+            position: absolute;
+            top: 65px;
+            right: 45px;
+            display: flex;
+            gap: 100px;
+            animation: slideDown 2s ease forwards;
+        }
+
+        .links a {
+            color: #e6ebef;
+            font-size: 30px;
+            text-decoration: none;
+            background-color: #050505;
+        }
+
+        .links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <img src="static/name.png" alt="Logo">
+    </div>
+    <div class="container">
+        <h1>Think critically,</h1>
+        <h3>Invest wisely</h3>
+        <h4>Knowledge is the foundation <br>of every successful
+            <br>investment.</h4>
+        <div class="index">
+            <a href="{{ url_for('stocks_index1') }}">Tap here to explore the market</a>
+        </div>
+
+        <div class="links">
+            <a href="{{ url_for('signup') }}">Sign Up</a>
+            <a href="{{ url_for('login') }}">Login </a>
+            <a href="{{ url_for('brokerlogin') }}">Broker login </a>
+        </div>
+    </div>
+</body>
+
+</html>

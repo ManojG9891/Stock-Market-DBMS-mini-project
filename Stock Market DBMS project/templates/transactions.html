@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Transactions</title>
+    <style>
+        body {
+            font-family: "Times New Roman", serif;
+            margin: 0;
+            padding: 2px;
+            background-color: #f5f5f5;
+        }
+        .header {
+            position: sticky;
+            background-color: #fff;
+            padding: 5px 10px 25px;
+            top: 2px;
+            box-shadow: 0 2px 5px #007bff;
+            display: flex;
+            flex-direction: column; 
+        }
+        .header img {
+            width: 350px;
+            height: 120px;
+            margin-right: 10px;
+            margin-bottom: -10px;
+        }
+        
+        .header p {
+            margin: 0px;
+            padding: 0px ;
+        }
+        .header p a {
+            padding: 10px 10px;
+            margin-left: 10px;
+            margin-right: 60px;
+            font-size: 25px;
+            text-decoration: none;
+            color: #007bff;
+        }
+        .header p a:hover {
+            text-decoration: underline;
+        }
+
+        .header1 { 
+            padding: 10px 1;
+            z-index: 1000;
+        }
+        .header1 h2 {
+            text-align: center;
+            font-size: 30px;
+            padding: 10px;
+            color: #000000;
+            background-color: #f5f5f5;
+            margin: 20px 0 ;
+            margin-top: 10px;
+            margin-bottom: 5px;
+        }
+
+        .header2 {
+            position: sticky;
+            top: 171.5px;
+            padding: 15px 1px;
+            z-index: 1000;
+            display: flex;
+            background-color: white;
+            box-shadow: 0 2px 5px #20d109;
+            justify-content: center; 
+            gap: 100px; 
+            align-items: center;
+            font-size: 25px;
+
+        }
+        
+        
+        .header2 .action .balance{
+            display: flex;
+            gap: 10px; 
+            align-items: center;
+        }
+
+        .action a{
+            text-decoration: none;
+        }
+
+        .action a:hover{
+            text-decoration: underline;
+        }
+
+        .header3 {
+            position: sticky;
+            top: 232px;
+            padding: 10px 1;
+            z-index: 1000;
+        }
+
+        table {
+            width: 99%;
+            margin: 0 auto;
+            border-collapse: collapse;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            background: white;
+        }
+        td {
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+            font-size: 22px;
+        }
+        th {
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+        td {
+            font-size: 20px;
+        }
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        .no-history {
+            text-align: center;
+            font-size: 25px;
+            color: #151414;
+            margin-top: 25px;
+        }
+        .deposit {
+            color: green;
+        }
+        .withdraw {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <img src="static/name-logo.png" alt="Logo">
+        <p>
+            <a href="{{ url_for('stocks_index') }}">Home Page</a> 
+            <a href="{{ url_for('holdings') }}">Stock Holdings</a> 
+            <a href="{{ url_for('trading') }}">Trading History</a> 
+            <a href="{{ url_for('transactions') }}"><u>Transactions</u></a> 
+            <a href="{{ url_for('account') }}">Account Details</a> 
+            <a href="{{ url_for('logout') }}">Log Out</a>
+        </p>
+    </div>
+
+    <div class="header2">
+        <div class="balance">
+            <span>Available Fund Balance: &#8377; {{ user.total_balance_amount }}</span>
+        </div>
+        <div class="action">
+            <span>Click Here To Deposit The Fund:</span>
+            <a href="{{ url_for('deposit') }}">Deposit</a>
+        </div>
+        <div class="action">
+            <span>Click Here To Withdraw The Fund:</span>
+            <a href="{{ url_for('withdraw') }}">Withdraw</a>
+        </div>
+    </div>
+    
+    
+    
+
+    <div class="header1">
+        <h2>Your Transactions</h2>
+    </div>
+    
+    {% if transactions %}
+    <table>
+        <tr class="header3">
+            <th>Transaction ID </th>
+            <th>Transaction Type </th>
+            <th>Amount </th>
+            <th>Date </th>
+
+        </tr>
+        {% for transactions in transactions %}
+        <tr>
+            <td>{{ transactions.transaction_id}}</td>
+            <td class="{{ 'deposit' if transactions.type == 'DEPOSIT' else 'withdraw' }}">{{ transactions.type }}</td>
+            <td>&#8377;  {{ transactions.amount  }}</td>
+            <td>{{ transactions.date }}</td>
+            
+        </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+    <p class="no-history">NO TRANSACTION HISTORY</p>
+    {% endif %}
+</body>
+</html>
+
+

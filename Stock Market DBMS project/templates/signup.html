@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <style>
+        @keyframes slideInFromLeft {
+            0% {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+            100% {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideInFromRight {
+            50% {
+                transform: translateX(50%);
+                opacity: 0;
+            }
+            0% {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+
+        @keyframes slideUp {
+            0% {
+                transform: translateY(100%);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        body {
+            font-family: "Times New Roman", serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            background-image: url("{{ url_for('static', filename='1221.png') }}");
+            background-size: cover;
+            background-position: center;
+            
+        }
+
+        .loginbox {
+            margin-left: 30px;
+            margin-top: 25px;
+            position: relative;
+            width: 750px;
+            height: 700px;
+            background: transparent;
+            border: 2px solid rgba(255, 255, 255, .5);
+            border-radius: 20px;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 0 30px rgba(0, 0, 0, .5);
+            justify-content: left;
+            align-items: center;
+            animation: slideInFromLeft 2s forwards;
+
+        }
+
+        .loginbox .form-box {
+            width: 100%;
+            padding: 40px;
+        }
+
+        .back-link {
+            font-size: 25px;
+            font-weight: bold;
+            margin-top: -15px;
+            margin-left: -20px;
+            position: absolute;
+            top: 30px;
+            left: 40px;
+        }
+
+        .back-link a{
+            text-decoration: none;
+
+        }
+
+        .form-box h2 {
+            font-size: 38px;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 20px;
+            margin-left: -50px;
+            margin-bottom: 45px;
+            color: rgb(255, 123, 0);
+        }
+
+        .input-box {
+            display: flex;
+            justify-content: space-between;
+            gap: 30px;
+            margin: 30px 0;
+            margin-bottom: 35px;
+        }
+
+        .input-wrapper,
+        .input-wrapper1 {
+            position: relative;
+            width: 50%;
+            height: 50px;
+            margin-right: 80px;
+            border-bottom: 2px solid rgb(210, 203, 203);
+        }
+
+        .input-wrapper label {
+            position: absolute;
+            top: 50%;
+            left: 5px;
+            transform: translateY(-50%);
+            font-size: 25px;
+            color: #ffffff;
+            font-weight: 500;
+            pointer-events: none;
+            transition: 0.3s ease-in-out;
+        }
+
+        .input-wrapper input:focus~label,
+        .input-wrapper input:not(:placeholder-shown)~label {
+            top: -5px;
+            font-size: 24px;
+            color: rgb(245, 245, 245);
+        }
+
+        .input-wrapper input {
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            border: none;
+            outline: none;
+            font-size: 23px;
+            margin-left: 10px;
+            margin-top: 8px;
+            color: rgb(255, 255, 255);
+            font-family: "Times New Roman", serif;
+            transition: all 0.3s ease;
+        }
+
+        .input-wrapper1 select {
+            width: 85%;
+            height: 100%;
+            color: rgb(255, 255, 255);
+            background: transparent;
+            border: none;
+            outline: none;
+            font-size: 25px;
+            font-family: "Times New Roman", serif;
+        }
+
+        .input-wrapper1 select option {
+            background: #242323;
+            color: rgb(255, 255, 255);
+            font-family: "Times New Roman", serif;
+        }
+
+        .input-wrapper2 {
+            position: relative;
+            width: 50%;
+            height: 50px;
+            margin-right: 80px;
+            border-bottom: 2px solid rgb(210, 203, 203);
+        }
+
+        .input-wrapper2 select {
+            width: 85%;
+            height: 60%;
+            color: rgb(255, 255, 255);
+            background: transparent;
+            border: none;
+            outline: none;
+            font-size: 25px;
+            font-family: "Times New Roman", serif;
+        }
+
+        .input-wrapper2 select option {
+            background: #242323;
+            color: rgb(255, 255, 255);
+            font-family: "Times New Roman", serif;
+        }
+
+        .icon {
+            position: absolute;
+            right: 8px;
+            font-size: 1.5em;
+            color: rgb(255, 255, 255);
+            line-height: 60px;
+        }
+
+        .icon1 {
+            position: relative;
+            right: -252px;
+            bottom: -25px;
+            font-size: 1.5em;
+            color: rgb(255, 255, 255);
+            line-height: 10px;
+        }
+
+        .input-box1 {
+            display: flex;
+            justify-content: space-between;
+            gap: 30px;
+            margin: 30px 0;
+            margin-bottom: 35px;
+        }
+
+        input[type="submit"] {
+            margin-top: 70px;
+            background-color: #2fb533;
+            font-size: 25px;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+            display: block;
+            margin-left: 280px;
+            margin-right: auto;
+            font-family: "Times New Roman", serif;
+            animation: slideUp 3s ease forwards;
+
+        }
+
+        input[type="submit"]:hover {
+            background-color: #007a04;
+        }
+
+        p {
+            font-size: 24px;
+            text-align: center;
+            margin-top: 5px;
+            color: #ffffff;
+            font-size: 25px;
+            margin-left: -30px;
+            margin-bottom: -20px;
+        }
+        p a{
+            text-decoration: none;
+
+        }
+
+        a{
+            color:rgb(255, 0, 0);
+        }
+        a:hover{
+            color: #b90501;
+        }
+        
+        .alert {
+            font-size: 22px;
+            padding: 10px;
+            text-align: center;
+            margin-bottom: 15px;
+            border: 1px solid transparent;
+            border-radius: 4px;
+            width: 40%;
+            margin-left: auto;
+            margin-right: auto;
+            position: absolute;
+            top: 550px;
+            left: 30px;
+            right: 30px;
+
+        }
+
+        .alert-success {
+            color: #3c763d;
+            background-color: #dff0d8;
+        }
+
+        .alert-warning {
+            color: #a94442;
+            background-color: #f2dede;            
+        }
+
+        .input-wrapper-password {
+    position: relative;
+    width: 45%;
+    height: 50px;
+    margin: 0 180px;
+    margin-top: -7px;
+    border-bottom: 2px solid rgb(210, 203, 203);
+}
+
+.input-wrapper-password label {
+    position: absolute;
+    top: 50%;
+    left: 110px;
+    transform: translateY(-50%);
+    font-size: 25px;
+    color: #ffffff;
+    font-weight: 500;
+    pointer-events: none;
+    transition: 0.3s ease-in-out;
+}
+
+.input-wrapper-password input {
+    width: 85%;
+    height: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-size: 23px;
+    margin-left: 10px;
+    margin-top: 8px;
+    color: rgb(255, 255, 255);
+    transition: all 0.3s ease;
+    font-family: "Times New Roman", serif;
+}
+
+.input-wrapper-password input:focus~label,
+.input-wrapper-password input:not(:placeholder-shown)~label {
+    top: -5px;
+    left: 5px;
+    font-size: 24px;
+    color: rgb(245, 245, 245);
+}
+.header {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    padding: 20px;
+    text-align: right;
+}
+
+.header img {
+    height: 100px;
+    opacity: 90%;
+    float: right;
+    margin-top: -10px;
+    margin-right: -10px;
+    animation: slideInFromRight 2s forwards;;
+}
+
+    </style>
+</head>
+<div class="header">
+    <img src="static/logo.png" alt="Logo">
+</div>
+<body>
+    <div class="loginbox">
+        <div class="back-link">
+            <a href="{{ url_for('back') }}"><< Back</a>
+        </div>
+
+        <div class="form-box login">
+            <h2>Create an Account</h2>
+            <form action="{{ url_for('signup') }}" method="POST">
+                <div class="input-box">
+                    <div class="input-wrapper">
+                        <span class="icon"><ion-icon name='person'></ion-icon></span>
+                        <input type="text" id="firstname" name="firstname" placeholder=" " required>
+                        <label for="firstname">First Name</label>
+                    </div>
+                    <div class="input-wrapper">
+                        <span class="icon"><ion-icon name="people"></ion-icon></span>
+                        <input type="text" id="secondname" name="secondname" placeholder=" " required>
+                        <label for="secondname">Second Name</label>
+                    </div>
+                </div>
+
+                <div class="input-box">
+                    <div class="input-wrapper1">
+                        <span class="icon"><ion-icon name="male-female"></ion-icon></span>
+                        <select id="gender" name="gender" required>
+                            <option value="a" disabled selected>Choose Gender</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
+                    </div>
+                    <div class="input-wrapper">
+                        <input type="text" id="age" name="age" placeholder=" " required>
+                        <label for="age">Age</label>
+                    </div>
+                </div>
+
+                <div class="input-box">
+                    <div class="input-wrapper2">
+                        <span class="icon1"><i class="gg-work-alt"></i></span>
+                        <select id="occupation" name="occupation" required>
+                            <option value="" disabled selected>Select Occupation</option>
+                            <option value="Student">Student</option>
+                            <option value="Employed">Employed</option>
+                            <option value="Self-employed">Self-employed</option>
+                            <option value="Unemployed">Unemployed</option>
+                            <option value="Retired">Retired</option>
+                        </select>
+                    </div>
+                    <div class="input-wrapper1">
+                        <span class="icon"><ion-icon name="location"></ion-icon></span>
+                        <select id="city" name="city" required>
+                            <option value="" disabled selected>Select City</option>
+                            <option value="Bengaluru">Bengaluru</option>
+                            <option value="Mumbai">Mumbai</option>
+                            <option value="Delhi">Delhi</option>
+                            <option value="Hyderabad">Hyderabad</option>
+                            <option value="Chennai">Chennai</option>
+                            <option value="Ahmedabad">Ahmedabad</option>
+                            <option value="Kolkata">Kolkata</option>
+                            <option value="Pune">Pune</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="input-box">
+                    <div class="input-wrapper">
+                        <span class="icon"><ion-icon name="call"></ion-icon></span>
+                        <input type="tel" id="mobilenumber" name="mobilenumber" pattern="[0-9]{10}" required placeholder=" ">
+                        <label for="mobilenumber">Mobile Number</label>
+                    </div>
+                    <div class="input-wrapper">
+                        <span class="icon"><ion-icon name="mail"></ion-icon></span>
+                        <input type="email" id="email" name="email" placeholder=" " required>
+                        <label for="email">Email</label>
+                    </div>
+                </div>
+
+                <div class="input-box">
+                    <div class="input-wrapper-password">
+                        <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
+                        <input type="password" id="password" name="password" class="full-width" placeholder=" " required>
+                        <label for="password">Password</label>
+                    </div>
+                </div>
+
+                <input type="submit" value="Sign Up">
+            </form>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            {% set category, message = messages[0] %}
+            <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endif %}
+            {% endwith %}
+
+            <p>Already have an account? <a href="{{ url_for('login') }}">Login here</a></p>
+        </div>
+    </div>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <link href='https://unpkg.com/css.gg@2.0.0/icons/css/work-alt.css' rel='stylesheet'>
+</body>
+
+</html>

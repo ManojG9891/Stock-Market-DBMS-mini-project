@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <style>
+         @keyframes slideDown {
+            0% {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        body {
+            font-family: "Times New Roman", serif;
+            margin: 0;
+            padding: 2px;
+            background-color: #f5f5f5;
+        }
+        .header {
+            position: sticky;
+            top: 0;
+            background-color: #fff;
+            padding: 15px 10px;
+            z-index: 1000;
+            box-shadow: 0 3px 5px #007bff;
+            display: flex;
+            align-items: center;
+        }
+        .header img {
+            height: 92px;
+            margin-right: 10px;
+            margin-bottom: 20px;
+            animation: slideDown 2s ease forwards;
+
+        }
+        .header h1 {
+            margin: 10px;
+            padding: 1px;
+            font-size: 40px;
+            color: #000000;
+            animation: slideDown 2s ease forwards;
+
+        }
+        .header p {
+            margin: 0;
+            padding: 10px 10px;
+        }
+        .header p a {
+            padding: 10px 10px;
+            margin-right: 60px;
+            font-size: 25px;
+            text-decoration: none;
+            color: #007bff;
+        }
+        .header p a:hover {
+            text-decoration: underline;
+        }
+        
+        .header2 {
+            position: sticky;
+            top: 224.5px;
+            background-color: #fff;
+            padding: 18px;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(118, 114, 114, 0.912);
+        }
+        .header2 span {
+            font-size: 26px;
+            margin-left: 60px;
+            margin-right: 124px;
+            color: black;
+        }
+        .header2 span1 {
+            font-size: 26px;
+            margin-left: -34px;
+            margin-right: 190px;
+            color: black;
+        }
+        .header2 span2 {
+            font-size: 26px;
+            margin-left: 38px;
+            margin-right: 190px;
+            color: black;
+        }
+
+        .header1 {
+            position: sticky;
+            top: 148.7px;
+            background-color: white;
+            padding: 10px 1;
+            z-index: 1000;
+            box-shadow: 0 5px 5px rgba(2, 228, 21, 0.912);
+        }
+        .header1 h2 {
+            text-align: center;
+            top: 60px;
+            font-size: 30px;
+            color: #000000;
+            margin: 13px 0 10px 0;
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(118, 114, 114, 0.912);
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        ul li {
+            display: flex;
+            justify-content: space-between;
+            background: white;
+            margin: 10px 0;
+            padding: 20px;
+            font-size: 22px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        ul li div {
+            flex: 1;
+            text-align: center;
+            margin-right: 100px;
+        }
+        ul li a {
+            flex: 1;
+            display: inline-block;
+            margin-top: 10px;
+            margin-right: 30px;
+            text-decoration: none;
+            color: #007bff;
+            text-align: center;
+        }
+        ul li a:hover {
+            text-decoration: underline;
+        }
+        .gain {
+            color: green;
+        }
+        .loss {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="static/logo.png" alt="Logo">
+        <div>
+            <h1>Welcome To Stock Base, {{ user.firstname }}</h1>
+            <p>
+                <a href="{{ url_for('stocks_index') }}"><u>Home Page</u></a> 
+                <a href="{{ url_for('holdings') }}">Stock Holdings</a> 
+                <a href="{{ url_for('trading') }}">Trading History</a> 
+                <a href="{{ url_for('transactions') }}">Transactions</a> 
+                <a href="{{ url_for('account') }}">Account Details</a> 
+                <a href="{{ url_for('logout') }}">Log Out</a>
+            </p>
+        </div>
+    </div>
+    
+    <div class="header1">
+        <h2>Available Stocks</h2>
+    </div>
+
+    <div class="header2">
+        <span>Stock ID</span>
+        <span>Stock Name</span>
+        <span2>Current Price</span2>
+        <span1>Today's Gain</span1>
+    </div>
+    
+    <ul>
+        {% for stock in stocks %}
+            <li>
+                <div>{{ stock.stock_id }}</div>
+                <div>{{ stock.stock_name }}</div>
+                <div>&#8377; {{ stock.stock_price }} </div>
+
+                <div class="{{ 'gain' if stock.today_gain >= 0 else 'loss' }}">
+                    {{ '+' if stock.today_gain >= 0 }}{{ stock.today_gain }}</div>
+
+                <a href="{{ url_for('stock_details', stock_id=stock.stock_id) }}">View Details</a>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

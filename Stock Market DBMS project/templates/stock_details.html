@@ -1,0 +1,230 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ stock.stock_name }} Details</title>
+    <style>
+        body {
+            font-family: "Times New Roman", serif;
+            margin: 0;
+            padding: 2px;
+            background-color: white;
+        }
+        .header {
+            position: sticky;
+            background-color: white;
+            padding: 5px 10px 25px;
+            top: 0;
+            display: flex;
+            flex-direction: column;
+        }
+        img {
+            width: 350px;
+            height: 120px;
+            margin-right: 10px;
+            margin-bottom: -10px;
+        }
+        .back-link {
+            font-size: 22px;
+            font-weight: bold;
+            margin-top: 0px;
+            margin-left: 15px;
+            margin-bottom: -10px;
+        }
+        
+        .header1 {
+            width: 95%;
+            margin-left: 35px;
+            position: sticky;
+            top: 150px;
+            background-color: white;
+            padding: 3px 3px;
+            border: 2px solid black;
+            z-index: 1000;
+        }
+        .header1 h2 {
+            text-align: center;
+            font-size: 35px;
+            padding: 10px;
+            color: #000000;
+            margin: 20px 0;
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+        .container {
+            margin-left: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            border: 1px solid black;
+            width: 92%;
+            padding: 10px;
+            border-radius: 10px;
+            background-color: #fff;
+            margin-top: 20px;
+        }
+
+        .form-group {
+            width: 47%;
+            margin: 10px;
+            display: flex;
+            flex-direction: column;
+        }
+        .form-group label {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .form-group div {
+            font-size: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f5f5f5;
+        }
+
+        .buttons-container {
+            position: sticky;
+            bottom: 0;
+            display: flex;
+            justify-content: center;
+            background-color: white;
+            padding: 10px;
+            border-top: 1px solid #ddd;
+            z-index: 1000;
+            gap:250px;
+        }
+        .buttons-container a {
+            display: inline-block;
+            padding: 12px 36px;
+            margin: 0 10px;
+            font-size: 25px;
+            border-radius: 5px;
+            text-align: center;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s, color 0.3s;
+            
+        }
+        .sell-button {
+            background-color: #ff0000;
+            color: #ffffff;
+        }
+        .sell-button:hover {
+            background-color: #8b0000;
+            color: white;
+        }
+        .buy-button {
+            background-color: #00ff00;
+            color: #ffffff;
+        }
+        .buy-button:hover {
+            background-color: #006400;
+            color: white;
+        }
+        h3{
+            margin-left: 55px;
+            font-size: 30px;
+            padding: 10px;
+            color: #000000;
+            margin-top: 9px;
+            margin-bottom: -8px; 
+        }
+        h4{
+            margin-left: 55px;
+            font-size: 30px;
+            padding: 10px;
+            color: #000000;
+            margin-top: 9px;
+            margin-bottom: -8px; 
+        }
+        .gain {
+            color: green;
+        }
+        .loss {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="{{ url_for('static', filename='name-logo.png') }}" alt="Logo">
+        <div class="back-link">
+            <a href="{{ url_for('back1') }}">&lt;&lt; Homepage</a>
+        </div>
+    </div>
+    
+
+    <div class="header1">
+        <h2>{{ stock.stock_name }}</h2>
+    </div>
+
+    <div class="container">
+        <div class="form-group">
+            <label>Stock ID</label>
+            <div>{{ stock.stock_id }}</div>
+        </div>
+        <div class="form-group"></div> 
+        <div class="form-group">
+            <label>Current Stock Price</label>
+            <div>{{ stock.stock_price }}</div>
+        </div>
+        <div class="form-group">
+            <label>Today's Performance</label>
+            <div class="{{ 'gain' if stock.today_gain >= 0 else 'loss' }}">
+                {{ '+' if stock.today_gain >= 0 }}{{ stock.today_gain }}
+            </div>
+        </div>
+        <div class="form-group">
+            <label>52 Week Low</label>
+            <div>{{ stock.one_year_lowprice }}</div>
+        </div>
+        <div class="form-group">
+            <label>52 Week High</label>
+            <div>{{ stock.one_year_highprice }}</div>
+        </div>     
+    </div>
+    
+    <h3>About {{ stock.stock_name }} :</h3>
+
+    <div class="container">
+        <div class="form-group">
+            <label>CEO name</label>
+            <div>{{ stock.ceo_name }}</div>
+        </div>
+        <div class="form-group">
+            <label>Founded year</label>
+            <div>{{ stock.founded }}</div>
+        </div>
+        <div class="form-group">
+            <label>Industry</label>
+            <div>{{ stock.industry }}</div>
+        </div>
+        <div class="form-group">
+            <label>Headquarters</label>
+            <div>{{ stock.headquarters }}</div>
+        </div>
+    </div>
+
+    <h4>Key Stats</h4>
+    
+    <div class="container">
+        <div class="form-group">
+            <label>Market Cap</label>
+            <div>{{ stock.market_cap }}</div>
+        </div>
+        <div class="form-group">
+            <label>Total Profit</label>
+            <div>{{ stock.current_year_profit }}</div>
+        </div>
+    </div>
+
+    <div class="buttons-container">
+        <a href="{{ url_for('buy', stock_id=stock.stock_id) }}" class="buy-button">BUY</a>
+        <a href="{{ url_for('sell', stock_id=stock.stock_id) }}" class="sell-button">SELL</a>
+    </div>
+</body>
+</html>

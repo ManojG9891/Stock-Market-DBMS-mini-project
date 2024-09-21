@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Holdings Details</title>
+    <style>
+        body {
+            font-family: "Times New Roman", serif;
+            margin: 0;
+            padding: 2px;
+            background-color: #f5f5f5;
+        }
+        .header {
+            position: sticky;
+            background-color: #fff;
+            padding: 5px 10px 25px;
+            top: 0;
+            box-shadow: 0 2px 5px #007bff;
+            display: flex;
+            flex-direction: column; 
+        }
+        .header img {
+            width: 350px;
+            height: 120px;
+            margin-right: 10px;
+            margin-bottom: -10px;
+        }
+        .header p {
+            margin: 0px;
+            padding: 0px ;
+        }
+        .header p a {
+            padding: 10px 10px;
+            margin-left: 10px;
+            margin-right: 60px;
+            font-size: 25px;
+            text-decoration: none;
+            color: #007bff;
+        }
+        .header p a:hover {
+            text-decoration: underline;
+        }
+        .header1 {
+            position: sticky;
+            top: 170px;
+            padding: 10px 1;
+            z-index: 1000;
+        }
+        .header1 h2 {
+            text-align: center;
+            font-size: 30px;
+            padding: 10px;
+            color: #000000;
+            background-color: #f5f5f5;
+            margin: 20px 0 ;
+            margin-top: 10px;
+            margin-bottom: 5px;
+        }
+        .header3 {
+            position: sticky;
+            top: 225px;
+            padding: 10px 1;
+            z-index: 1000;
+        }
+        table {
+            width: 99%;
+            margin: 0 auto;
+            border-collapse: collapse;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            background: white;
+        }
+        td, th {
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+            font-size: 25px;
+        }
+        td {
+            font-size: 22px;
+        }
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        .no-history {
+            text-align: center;
+            font-size: 25px;
+            color: #151414;
+            margin-top: 25px;
+        }
+        .gain {
+            color: green;
+        }
+        .loss {
+            color: red;
+        }
+
+        td a {
+            display: inline-block;
+            padding: 12px 25px;
+            margin: 0 10px;
+            font-size: 18px;
+            border-radius: 5px;
+            text-align: center;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s, color 0.3s;
+            
+        }
+
+        .sell-button {
+            background-color: #ff0000;
+            color: #ffffff;
+        }
+        .sell-button:hover {
+            background-color: #8b0000;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="static/name-logo.png" alt="Logo">
+        <p>
+            <a href="{{ url_for('stocks_index') }}">Home Page</a> 
+            <a href="{{ url_for('holdings') }}"><u>Stock Holdings</u></a> 
+            <a href="{{ url_for('trading') }}">Trading History</a> 
+            <a href="{{ url_for('transactions') }}">Transactions</a>
+            <a href="{{ url_for('account') }}">Account Details</a>  
+            <a href="{{ url_for('logout') }}">Log Out</a>
+        </p>
+    </div>
+
+    <div class="header1">
+        <h2>Your Stock Holdings Details</h2>
+    </div>
+
+    {% if holdings %}
+    <table>
+        <tr class="header3">
+            <th>Stock Name</th>
+            <th>Number of Quantities</th>
+            <th>Buy Date</th>
+            <th>Buy Price</th>
+            <th>Current Price</th>
+            <th>Total Gain</th>
+            <th> </th>
+        </tr>
+        {% for holding in holdings %}
+        <tr>
+            <td>{{ holding.stock_name }}</td>
+            <td>{{ holding.quantities }}</td>
+            <td>{{ holding.buy_date }}</td>
+            <td>&#8377; {{ holding.buy_price }}</td>
+            <td>&#8377; {{ holding.stock_price }}</td>
+            <td class="{{ 'gain' if holding.total_profit >= 0 else 'loss' }}">
+                {{ '+' if holding.total_profit >= 0  }} {{ holding.total_profit }}
+            </td>
+            <td> <a href="{{ url_for('sell', stock_id=holding.stock_id) }}" class="sell-button">SELL</a>
+            </td>
+
+        </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+    <p class="no-history">NO HOLDING HISTORY</p>
+    {% endif %}
+</body>
+</html>
